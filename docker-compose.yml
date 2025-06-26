@@ -5,36 +5,12 @@ services:
     build: ./apache-php
     container_name: apache_php
     ports:
-      - "9080:80"
+      - "9080:80"  # This is the internal port for Apache in Docker
     volumes:
       - ./src:/var/www/html
-    depends_on:
-      - db
+    networks:
+      - webnet
 
-  db:
-    image: mysql:8.0
-    container_name: mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword324311!!
-      MYSQL_DATABASE: restaurantsProject
-      MYSQL_USER: restaurantsUser
-      MYSQL_PASSWORD: RestaurantsPassword324311!!
-    ports:
-      - "9306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    ports:
-      - "9081:80"
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: rootpassword324311!!
-    depends_on:
-      - db
-
-volumes:
-  db_data:
+networks:
+  webnet:
+    driver: bridge
