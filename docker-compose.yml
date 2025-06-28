@@ -5,12 +5,6 @@ services:
     build: ./apache-php
     container_name: apache_php
     ports:
-      - "9080:80"  # This is the internal port for Apache in Docker
+      - "9080:80"
     volumes:
       - ./src:/var/www/html
-    networks:
-      - webnet
-
-networks:
-  webnet:
-    driver: bridge
