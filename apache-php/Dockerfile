@@ -44,3 +44,14 @@ RUN echo '<Directory /var/www/html/public>\n\
 
 # Set working directory
 WORKDIR /var/www/html
+
+# Create writable directory for QR codes and set permissions
+RUN mkdir -p /var/www/html/public/user-uploads/qrcodes \
+    && chown -R www-data:www-data /var/www/html/public/user-uploads \
+    && chmod -R 755 /var/www/html/public/user-uploads
+
+# Set correct permissions for Laravel storage and cache directories
+RUN mkdir -p /var/www/html/storage \
+    && mkdir -p /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
